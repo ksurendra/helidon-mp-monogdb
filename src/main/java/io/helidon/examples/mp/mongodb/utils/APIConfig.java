@@ -2,8 +2,8 @@ package io.helidon.examples.mp.mongodb.utils;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -16,13 +16,16 @@ import java.util.concurrent.atomic.AtomicReference;
 public class APIConfig {
     private final AtomicReference<String> datastoreUrl = new AtomicReference<>();
     private final AtomicReference<String> databaseName = new AtomicReference<>();
+    private final AtomicReference<String> connectionString = new AtomicReference<>();
 
     @Inject
     public APIConfig(
             @ConfigProperty(name = "datastore.url") String datastoreUrl,
-            @ConfigProperty(name = "datastore.databasename") String databaseName) {
+            @ConfigProperty(name = "datastore.databasename") String databaseName,
+            @ConfigProperty(name = "mongo.connectionstring") String connectionString) {
         this.datastoreUrl.set(datastoreUrl);
         this.databaseName.set(databaseName);
+        this.connectionString.set(connectionString);
     }
 
     public String getDatastoreUrl() {
@@ -31,5 +34,9 @@ public class APIConfig {
 
     public String getDatabaseName() {
         return databaseName.get();
+    }
+
+    public String getConnectionString() {
+        return connectionString.get();
     }
 }
